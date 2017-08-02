@@ -158,17 +158,11 @@
 		</dependency>
     </dependencies>
 
-	<distributionManagement>
-      <repository>
-            <id>user-mealkey</id>
-            <name>User Project Release</name>
-            <url>http://maven.mealkey.net/nexus/content/repositories/releases/</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>user-mealkey</id>
-            <name>User Project SNAPSHOTS</name>
-            <url>http://maven.mealkey.net/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+	<repositories>
+		<repository>
+			<id>nexus-aliyun</id>
+			<name>Nexus aliyun</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
 </project>
