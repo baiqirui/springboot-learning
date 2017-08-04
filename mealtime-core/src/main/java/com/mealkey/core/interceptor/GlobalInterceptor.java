@@ -39,7 +39,7 @@ public class GlobalInterceptor implements HandlerInterceptor
         response.setHeader("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
         response.setHeader("Access-Control-Max-Age", "2592000");
         response.setHeader("Access-Control-Allow-Headers",
-            "Content-Type,sessionId,appKey,timestamp,v,sign,TENANT_ID,USER_ID");
+            "Content-Type,sessionId,appKey,timestamp,v,sign");
         
         
         // 2xx 状态码

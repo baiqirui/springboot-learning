@@ -9,10 +9,12 @@ import net.logstash.logback.decorate.JsonFactoryDecorator;
 /**
  * Created by lvjj on 2017/5/23.
  */
-public class LogstashJsonFactoryDecorator implements JsonFactoryDecorator {
-
+public class LogstashJsonFactoryDecorator implements JsonFactoryDecorator
+{
+    
     @Override
-    public MappingJsonFactory decorate(MappingJsonFactory factory) {
+    public MappingJsonFactory decorate(MappingJsonFactory factory)
+    {
         ObjectMapper codec = factory.getCodec();
         codec.setDateFormat(new ISO8601DateFormat());
         SimpleModule module = new SimpleModule();

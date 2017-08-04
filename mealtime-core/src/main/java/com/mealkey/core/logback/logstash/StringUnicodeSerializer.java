@@ -11,13 +11,14 @@ import java.nio.charset.Charset;
 /**
  * Created by lvjj on 2017/5/23.
  */
-public class StringUnicodeSerializer extends JsonSerializer<String> {
-
+public class StringUnicodeSerializer extends JsonSerializer<String>
+{
+    
     @Override
-    public void serialize(String str, JsonGenerator gen,
-                          SerializerProvider provider) throws IOException,
-            JsonProcessingException {
-        gen.writeUTF8String(str.getBytes(Charset.defaultCharset()),0,str.length());
+    public void serialize(String str, JsonGenerator gen, SerializerProvider provider)
+        throws IOException, JsonProcessingException
+    {
+        gen.writeUTF8String(str.getBytes(Charset.defaultCharset()), 0, str.length());
     }
-
+    
 }

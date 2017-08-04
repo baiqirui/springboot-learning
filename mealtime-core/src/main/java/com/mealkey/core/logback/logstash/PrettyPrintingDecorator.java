@@ -7,12 +7,14 @@ import net.logstash.logback.decorate.JsonGeneratorDecorator;
 /**
  * Created by lvjj on 2017/5/23.
  */
-public class PrettyPrintingDecorator implements JsonGeneratorDecorator {
-
+public class PrettyPrintingDecorator implements JsonGeneratorDecorator
+{
+    
     @Override
-    public JsonGenerator decorate(JsonGenerator generator) {
+    public JsonGenerator decorate(JsonGenerator generator)
+    {
         generator.setCharacterEscapes(new JsonpCharacterEscapes());
         return generator.useDefaultPrettyPrinter();
     }
-
+    
 }

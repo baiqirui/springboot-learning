@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <!-- ${PID}，当前进程ID
+    ${LOG_FILE}，Spring Boot配置文件中logging.file的值
+    ${LOG_PATH}, Spring Boot配置文件中logging.path的值
+    -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <property name="LOG_PATH" value="../logs"/>
+    <!-- 日志文件名 -->
+    <property name="LOG_FILE" value="mealtime-core"/>
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_PATH}/${LOG_FILE}.%d{yyyyMMdd}.log</FileNamePattern>
+            <!--表示只保留最近30天的日志，以防止日志填满整个磁盘空间-->
+            <!-- <MaxHistory>30</MaxHistory> -->
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+        <!--日志文件最大的大小-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>500MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_PATH}/${LOG_FILE}.%d{yyyyMMdd}.error.log</FileNamePattern>
+            <!--表示只保留最近30天的日志，以防止日志填满整个磁盘空间-->
+            <!-- <MaxHistory>30</MaxHistory> -->
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+        <!--日志文件最大的大小-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>500MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+    
+
+    <!-- 日志输出级别 -->
+    <root level="info">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+      
+    <logger name="org.springframework.web" level="TRACE"/>
+    <logger name="com.mealkey" level="DEBUG" />
+
+    <!-- 测试环境-->
+    <springProfile name="test">
+        <logger name="org.springframework.web" level="TRACE"/>
+        <logger name="com.mealkey" level="DEBUG" />
+        <appender-ref ref="FILE"/>
+    </springProfile>
+
+    <!-- 生产环境. -->
+    <springProfile name="prod">
+        <logger name="org.springframework.web" level="TRACE"/>
+        <logger name="com.mealkey" level="DEBUG" />
+        <appender-ref ref="FILE"/>
+    </springProfile>
+
+
+</configuration>
