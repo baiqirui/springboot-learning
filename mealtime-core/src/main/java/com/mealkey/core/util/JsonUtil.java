@@ -15,49 +15,64 @@ import java.util.Map;
  *
  * @author cc.peng
  */
-public class JsonUtil {
+public class JsonUtil
+{
     private static Logger logger = Logger.getLogger(JsonUtil.class);
+    
     private static JsonObjectMapper objectMapper = new JsonObjectMapper();
-
-    public static <T> T readValue(String content, Class<T> valueType) {
-
-        try {
+    
+    public static <T> T readValue(String content, Class<T> valueType)
+    {
+        
+        try
+        {
             return objectMapper.readValue(content, valueType);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             logger.error("JSON 格式错误：" + content);
-            throw new BusinessException("JSON 格式错误，无法解析。");
+            throw new BusinessException(1, "JSON 格式错误，无法解析。");
         }
     }
-
+    
     @SuppressWarnings("rawtypes")
-    public static <T> T readValue(String content, TypeReference valueTypeRef) {
-        try {
+    public static <T> T readValue(String content, TypeReference valueTypeRef)
+    {
+        try
+        {
             return objectMapper.readValue(content, valueTypeRef);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             logger.error("JSON 格式错误：" + content);
-            throw new BusinessException("JSON 格式错误，无法解析。");
+            throw new BusinessException(1, "JSON 格式错误，无法解析。");
         }
     }
-
+    
     /**
      * 对象转JSON字符串
      *
      * @param obj
      * @return
      */
-    public static String toJsonString(Object obj) {
+    public static String toJsonString(Object obj)
+    {
         String json = null;
-        try {
+        try
+        {
             json = objectMapper.writeValueAsString(obj);
-            if (StringUtils.equals(json, "null")) {
+            if (StringUtils.equals(json, "null"))
+            {
                 return null;
             }
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e)
+        {
             e.printStackTrace();
         }
         return json;
     }
-
+    
     /**
      * Json转Map对象
      *
@@ -65,42 +80,47 @@ public class JsonUtil {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static Map<String, Object> jsonToMap(String json) {
-        if (StringUtils.isBlank(json)) {
+    public static Map<String, Object> jsonToMap(String json)
+    {
+        if (StringUtils.isBlank(json))
+        {
             return null;
         }
         Map<String, Object> jsonMap = null;
-        try {
+        try
+        {
             jsonMap = objectMapper.readValue(json, Map.class);
-        } catch (IOException e) {
-            throw new BusinessException("JSON字符串转Map失败。");
+        }
+        catch (IOException e)
+        {
+            throw new BusinessException(1, "JSON字符串转Map失败。");
         }
         return jsonMap;
     }
-
+    
     /**
      * Json转对象
      *
      * @param json
      * @return
      */
-    public static <T> T mapperObject(String json, Class<T> obj) {
-        if (StringUtils.isBlank(json)) {
+    public static <T> T mapperObject(String json, Class<T> obj)
+    {
+        if (StringUtils.isBlank(json))
+        {
             return null;
         }
         T object = null;
-        try {
+        try
+        {
             object = objectMapper.readValue(json, obj);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
-            throw new BusinessException("JSON转换对象失败。");
+            throw new BusinessException(1, "JSON转换对象失败。");
         }
         return object;
     }
-
-    public static void main(String[] args) {
-        String json = "{\"sessionId\":\"9531a8cff0b4f6b88c12137e550b6de\",\"currentStoreList\":\"\",\"allStoreList\":\"\",\"tenantMenuList\":\"\",\"storeMenuList\":\"\"}";
-        Map<String, Object> jsonToMap = jsonToMap(json);
-        System.out.println(jsonToMap);
-    }
+    
 }

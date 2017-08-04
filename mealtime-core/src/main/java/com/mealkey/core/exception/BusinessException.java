@@ -1,27 +1,29 @@
 package com.mealkey.core.exception;
 
-import com.mealkey.core.util.resources.ResourceUtil;
-
 /**
- * 发生业务错误时引发的异常。
- * @author yidi
+ * 业务异常;
+ * 
+ * @author  baiqirui
+ * @version  [版本号, 2017年8月3日]
+ * @see  [相关类/方法]
+ * @since  [产品/模块版本]
  */
 public class BusinessException extends ExceptionBase
 {
     private static final long serialVersionUID = 1L;
 
-    public BusinessException() 
+    public BusinessException(int errorCode)
     {
-        this(ResourceUtil.getString(ArgumentException.class,"Business"));
+        super(errorCode);
     }
     
-    public BusinessException(String message)
+    public BusinessException(int errorCode, String message)
     {
-        super(message);
+        super(errorCode, message);
     }
     
-    public BusinessException(String message, Throwable cause)
+    public BusinessException(int errorCode, String... arguments)
     {
-        super(message, cause);
+        super(errorCode, arguments);
     }
 }

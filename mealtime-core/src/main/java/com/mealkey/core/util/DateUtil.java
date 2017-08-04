@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.mealkey.core.exception.ArgumentException;
-import com.mealkey.core.exception.ArgumentNullException;
-import com.mealkey.core.exception.ArgumentOutOfRangeException;
 
 /**
  * 为 Date 提供常数和静态方法。
@@ -67,8 +65,9 @@ public class DateUtil
         }
         catch (ParseException e)
         {
-            throw new ArgumentException("不能使用日期格式“" + format + "”解析：" + s, "dateString");
+            // throw new ArgumentException("不能使用日期格式“" + format + "”解析：" + s, "dateString");
         }
+        return null;
     }
     
     /**
@@ -117,10 +116,7 @@ public class DateUtil
      */
     public static boolean isLeapYear(int year)
     {
-        if ((year < MinYear) || (year > MaxYear))
-        {
-            throw ArgumentOutOfRangeException.createBetween("year", year, MinYear, MaxYear);
-        }
+        ArgumentException.checkNotBetweenIn("year", year, MinYear, MaxYear);
         if (0 != (year % 4))
         {
             return false;
@@ -238,8 +234,6 @@ public class DateUtil
      */
     public static Date truncate(Date date, DatePart datePart)
     {
-        ArgumentNullException.checkNull("date", date);
-        
         long data = date.getTime();
         switch (datePart)
         {
@@ -445,7 +439,6 @@ public class DateUtil
     
     private static Date add(Date date, int calendarField, int amount)
     {
-        ArgumentNullException.checkNull("date", date);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(calendarField, amount);
@@ -454,7 +447,6 @@ public class DateUtil
     
     private static int get(Date date, int calendarField)
     {
-        ArgumentNullException.checkNull("date", date);
         Calendar c = Calendar.getInstance();
         c.setLenient(false);
         c.setTime(date);
@@ -463,7 +455,6 @@ public class DateUtil
     
     private static Date set(Date date, int calendarField, int amount)
     {
-        ArgumentNullException.checkNull("date", date);
         Calendar c = Calendar.getInstance();
         c.setLenient(false);
         c.setTime(date);
@@ -654,12 +645,14 @@ public class DateUtil
     
     /**
      * 获取指定日期的最早时间
+     * 
      * @param date 日期
      */
     public static Date earliestTime(Date date)
     {
         Calendar c = Calendar.getInstance();
-        c.setTime(date);;
+        c.setTime(date);
+        ;
         c.set(Calendar.HOUR, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
@@ -669,12 +662,14 @@ public class DateUtil
     
     /**
      * 将指定日期的时间设置为一天的最早时间
+     * 
      * @param date 日期
      */
     public static Date latestTime(Date date)
     {
         Calendar c = Calendar.getInstance();
-        c.setTime(date);;
+        c.setTime(date);
+        ;
         c.set(Calendar.HOUR, 23);
         c.set(Calendar.MINUTE, 59);
         c.set(Calendar.SECOND, 59);

@@ -5,16 +5,12 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.mealkey.core.model.CommonObject;
-import com.mealkey.core.util.CommonObjectHolder;
 
 /**
  * 全局拦截器，用于一些全局设置 Created by lvjj on 2016/11/17
@@ -45,7 +41,6 @@ public class GlobalInterceptor implements HandlerInterceptor
         response.setHeader("Access-Control-Allow-Headers",
             "Content-Type,sessionId,appKey,timestamp,v,sign,TENANT_ID,USER_ID");
         
-        processCommonObject(request);
         
         // 2xx 状态码
         switch (request.getMethod())
@@ -68,31 +63,6 @@ public class GlobalInterceptor implements HandlerInterceptor
         return true;
     }
     
-    private void processCommonObject(HttpServletRequest request)
-    {
-        String sessionId = request.getParameter("sessionId");
-        String tenantId = request.getParameter("tenantId");
-        String storeId = request.getParameter("storeId");
-        String userId = request.getParameter("userId");
-        CommonObject commonObject = new CommonObject();
-        if (StringUtils.isNotBlank(sessionId))
-        {
-            commonObject.setSessionId(sessionId);
-        }
-        if (StringUtils.isNotBlank(tenantId))
-        {
-            commonObject.setTenantId(Long.valueOf(tenantId));
-        }
-        if (StringUtils.isNotBlank(storeId))
-        {
-            commonObject.setStoreId(Long.valueOf(storeId));
-        }
-        if (StringUtils.isNotBlank(userId))
-        {
-            commonObject.setUserId(Long.valueOf(userId));
-        }
-        CommonObjectHolder.set(commonObject);
-    }
     
     /**
      * 请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）

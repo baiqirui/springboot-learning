@@ -45,7 +45,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mealkey.core.exception.BusinessException;
 import com.mealkey.core.format.JsonObjectMapper;
-import com.mealkey.core.response.ErrorResponse;
+import com.mealkey.core.response.ResultBody;
 
 /**
  *
@@ -222,8 +222,8 @@ public class HttpUtils
                     && HttpStatus.SC_CREATED != httpResoponse.getStatusLine().getStatusCode())
             {
                 logger.error("send http request error：" + "url：" + url + " param：" + jsonString);
-                ErrorResponse error = jsonObj.readValue(resultStr, ErrorResponse.class);
-                throw new BusinessException(error.getError());
+                ResultBody error = jsonObj.readValue(resultStr, ResultBody.class);
+//                throw new BusinessException(error.getError());
 //                throw new BusinessException("The response code is error! url: " + url + "  cause：" + resultStr);
             }
             EntityUtils.consume(httpResoponse.getEntity());
@@ -311,8 +311,8 @@ public class HttpUtils
                     && HttpStatus.SC_CREATED != httpResoponse.getStatusLine().getStatusCode())
             {
                 logger.error("send http request error：" + "url：" + url + " param：" + jsonString);
-                ErrorResponse error = jsonObj.readValue(resultStr, ErrorResponse.class);
-                throw new BusinessException(error.getError());
+                ResultBody error = jsonObj.readValue(resultStr, ResultBody.class);
+//                throw new BusinessException(error.getError());
             }
             EntityUtils.consume(httpResoponse.getEntity());
             if (valueType.equals(String.class))
@@ -399,8 +399,8 @@ public class HttpUtils
                     && HttpStatus.SC_CREATED != httpResponse.getStatusLine().getStatusCode())
             {
                 logger.error("send http request error：" + "url：" + url);
-                ErrorResponse error = jsonObj.readValue(resultStr, ErrorResponse.class);
-                throw new BusinessException(error.getError());
+                ResultBody error = jsonObj.readValue(resultStr, ResultBody.class);
+//                throw new BusinessException(error.getError());
 //                throw new BusinessException("The response code is error! url: " + url + "  cause：" + renStr);
             }
             EntityUtils.consume(entity);
@@ -485,8 +485,8 @@ public class HttpUtils
                     && HttpStatus.SC_CREATED != httpResponse.getStatusLine().getStatusCode())
             {
                 logger.error("send http request error：" + "url：" + url);
-                ErrorResponse error = jsonObj.readValue(resultStr, ErrorResponse.class);
-                throw new BusinessException(error.getError());
+                ResultBody error = jsonObj.readValue(resultStr, ResultBody.class);
+//                throw new BusinessException(error.getError());
 //                throw new BusinessException("The response code is error! url: " + url);
             }
 
@@ -563,8 +563,8 @@ public class HttpUtils
                     && HttpStatus.SC_CREATED != httpResoponse.getStatusLine().getStatusCode())
             {
                 logger.error("send http request error：" + "url：" + url + " param：" + requsetJsonStr);
-                ErrorResponse error = jsonObj.readValue(resultStr, ErrorResponse.class);
-                throw new BusinessException(error.getError());
+                ResultBody error = jsonObj.readValue(resultStr, ResultBody.class);
+//                throw new BusinessException(error.getError());
             }
 
             EntityUtils.consume(httpResoponse.getEntity());
@@ -603,7 +603,6 @@ public class HttpUtils
     {
         Map<String, String> headerMap = new HashMap<String, String>();
         headerMap.put("interal", "interal");
-        headerMap.put("sessionId", CommonObjectHolder.getSessionId());
         return headerMap;
     }
 

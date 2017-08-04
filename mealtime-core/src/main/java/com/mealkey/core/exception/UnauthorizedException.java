@@ -6,13 +6,11 @@ package com.mealkey.core.exception;
  */
 public class UnauthorizedException extends BusinessException
 {
+    public UnauthorizedException(int errorCode)
+    {
+        super(errorCode);
+    }
+
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @param message
-     */
-    public UnauthorizedException(String message)
-    {
-        super(message);
-    }
 }

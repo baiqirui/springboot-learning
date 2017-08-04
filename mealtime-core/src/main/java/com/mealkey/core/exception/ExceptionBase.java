@@ -1,25 +1,76 @@
 package com.mealkey.core.exception;
 
+import java.text.MessageFormat;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.mealkey.core.constant.ResultCodeConstant;
+import com.mealkey.core.util.resources.PropertiesListenerConfig;
+
 /**
  * 表示在应用程序执行过程中发生的错误。
  * @author yidi
  */
-public abstract class ExceptionBase extends RuntimeException
+public class ExceptionBase extends RuntimeException
 {
     private static final long serialVersionUID = 1L;
-
-    public ExceptionBase(String message)
+    
+    protected String[] arguments;
+    
+    protected int errorCode;
+    
+    protected String errorMessage;
+    
+    public ExceptionBase(int errorCode, String... arguments)
     {
-        super(message);
+        this.errorCode = errorCode;
+        this.arguments = arguments;
+        String message = PropertiesListenerConfig.getResultMessage(errorCode);
+        if (StringUtils.isBlank(message))
+        {
+            this.errorMessage = PropertiesListenerConfig.getResultMessage(ResultCodeConstant.UNKONW_EXCEPTION);
+        }
+        else
+        {
+            this.errorMessage = MessageFormat.format(message, arguments);
+        }
     }
     
-    public ExceptionBase(Throwable cause)
+    public ExceptionBase()
     {
-        super(cause);
+        super();
+    }
+    
+    public ExceptionBase(int errorCode)
+    {
+        this.errorCode = errorCode;
+        String message = PropertiesListenerConfig.getResultMessage(errorCode);
+        if (StringUtils.isBlank(message))
+        {
+            message = PropertiesListenerConfig.getResultMessage(ResultCodeConstant.UNKONW_EXCEPTION);
+        }
+        
+    }
+    
+    public ExceptionBase(int errorCode, String errorMessage)
+    {
+        this.errorMessage = errorMessage;
+        this.errorCode = errorCode;
+    }
+    
+    public int getErrorCode()
+    {
+        return errorCode;
     }
 
-    public ExceptionBase(String message, Throwable cause)
+    public String[] getArguments()
     {
-        super(message,cause);
+        return arguments;
+    }
+    
+    @Override
+    public String getMessage()
+    {
+        return this.errorMessage;
     }
 }
