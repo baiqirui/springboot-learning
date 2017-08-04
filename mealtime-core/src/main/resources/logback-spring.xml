@@ -68,21 +68,23 @@
     </root>
 
       
-    <logger name="org.springframework.web" level="TRACE"/>
-    <logger name="com.mealkey" level="DEBUG" />
 
     <!-- 测试环境-->
     <springProfile name="test">
         <logger name="org.springframework.web" level="TRACE"/>
         <logger name="com.mealkey" level="DEBUG" />
-        <appender-ref ref="FILE"/>
+    </springProfile>
+    
+      <!-- 开发环境-->
+    <springProfile name="dev">
+        <logger name="org.springframework.web" level="TRACE"/>
+        <logger name="com.mealkey" level="DEBUG" />
     </springProfile>
 
     <!-- 生产环境. -->
     <springProfile name="prod">
-        <logger name="org.springframework.web" level="TRACE"/>
-        <logger name="com.mealkey" level="DEBUG" />
-        <appender-ref ref="FILE"/>
+        <logger name="org.springframework.web" level="ERROR"/>
+        <logger name="com.mealkey" level="INFO" />
     </springProfile>
 
 

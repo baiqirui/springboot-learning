@@ -27,7 +27,7 @@ public class GlobalExceptionHandler extends ExceptionHandlerExceptionResolver
     @ExceptionHandler({Exception.class})
     public ResultBody processException(HttpServletRequest request, HttpServletResponse response, Exception e)
     {
-        log.error("公共异常处理：", e);
+        log.info("公共异常处理：", e);
         
         // 判断是否是系统内部自定义异常;
         if (e instanceof ExceptionBase)
