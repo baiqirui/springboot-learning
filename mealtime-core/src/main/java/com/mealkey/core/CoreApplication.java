@@ -13,5 +13,6 @@ public class CoreApplication
         SpringApplication application = new SpringApplication(CoreApplication.class);
         application.addListeners(new PropertiesListener("result_code.properties"));
         application.run(args);
+        
     }
 }
