@@ -2,8 +2,8 @@ package com.mealkey.core.response;
 
 import java.io.Serializable;
 
+import com.mealkey.core.config.ResultCodeConfig;
 import com.mealkey.core.constant.ResultCodeConstant;
-import com.mealkey.core.util.resources.PropertiesListenerConfig;
 
 /**
  * 通用返回结果
@@ -30,7 +30,7 @@ public class ResultBody implements Serializable
     
     public ResultBody(Object data)
     {
-        this(ResultCodeConstant.SUCCESS, PropertiesListenerConfig.getResultMessage(ResultCodeConstant.SUCCESS), data);
+        this(ResultCodeConstant.SUCCESS, ResultCodeConfig.getResultMessage(ResultCodeConstant.SUCCESS), data);
     }
     
     public ResultBody(int code, String message)
@@ -81,6 +81,6 @@ public class ResultBody implements Serializable
     public static ResultBody createUnKnowExceptionResultBody()
     {
         return new ResultBody(ResultCodeConstant.UNKONW_EXCEPTION,
-            PropertiesListenerConfig.getResultMessage(ResultCodeConstant.UNKONW_EXCEPTION));
+            ResultCodeConfig.getResultMessage(ResultCodeConstant.UNKONW_EXCEPTION));
     }
 }

@@ -1,12 +1,18 @@
 package com.mealkey.core.exception;
 
+import java.text.MessageFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
+import com.mealkey.core.config.ResultCodeConfig;
+import com.mealkey.core.constant.ResultCodeConstant;
 import com.mealkey.core.response.ResultBody;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +41,19 @@ public class GlobalExceptionHandler extends ExceptionHandlerExceptionResolver
             ExceptionBase exb = (ExceptionBase)e;
             return new ResultBody(exb.getErrorCode(), exb.getMessage());
         }
-        else
+        // 2.判断是否是spring的参数校验异常
+        else if (e instanceof MethodArgumentNotValidException)
         {
-            return ResultBody.createUnKnowExceptionResultBody();
+            // 按需重新封装需要返回的错误信息
+            MethodArgumentNotValidException exception = (MethodArgumentNotValidException)e;
+            // 解析原错误信息，封装后返回，此处返回非法的字段名称，原始值，错误信息
+            for (FieldError error : exception.getBindingResult().getFieldErrors())
+            {
+                String errorMsg = ResultCodeConfig.getResultMessage(ResultCodeConstant.PARAM_EXCEPTION);
+                errorMsg = MessageFormat.format(errorMsg, error.getField(), error.getDefaultMessage());
+                return new ResultBody(ResultCodeConstant.PARAM_EXCEPTION, errorMsg);
+            }
         }
+        return ResultBody.createUnKnowExceptionResultBody();
     }
 }

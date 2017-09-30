@@ -16,8 +16,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//@Configuration
-//@EnableSwagger2
+@Configuration
+@EnableSwagger2
 public class SwaggerConfig extends WebMvcConfigurerAdapter {
 
     /**
@@ -49,7 +49,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 .forCodeGeneration(true).enableUrlTemplating(false)
                 .pathMapping("/")// base，最终调用接口后会和paths拼接在一起
                 .select()
- .apis(RequestHandlerSelectors.basePackage("com.mealkey.mealtime"))
+ .apis(RequestHandlerSelectors.basePackage("com.mealkey"))
 //                .paths(Predicates.or(PathSelectors.regex("/api/*")))//过滤的接口
                 .build()
                 .apiInfo(new ApiInfoBuilder()

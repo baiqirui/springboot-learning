@@ -15,4 +15,6 @@ public class ResultCodeConstant
     public static final int NOT_BETWEEN_IN = 100004;
     
     public static final int NOT_ENUM_IN = 100005;
+
+    public static final int PARAM_EXCEPTION = 100006;
 }

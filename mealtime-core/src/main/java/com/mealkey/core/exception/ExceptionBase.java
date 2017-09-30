@@ -4,8 +4,8 @@ import java.text.MessageFormat;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.mealkey.core.config.ResultCodeConfig;
 import com.mealkey.core.constant.ResultCodeConstant;
-import com.mealkey.core.util.resources.PropertiesListenerConfig;
 
 /**
  * 表示在应用程序执行过程中发生的错误。
@@ -25,10 +25,10 @@ public class ExceptionBase extends RuntimeException
     {
         this.errorCode = errorCode;
         this.arguments = arguments;
-        String message = PropertiesListenerConfig.getResultMessage(errorCode);
+        String message = ResultCodeConfig.getResultMessage(errorCode);
         if (StringUtils.isBlank(message))
         {
-            this.errorMessage = PropertiesListenerConfig.getResultMessage(ResultCodeConstant.UNKONW_EXCEPTION);
+            this.errorMessage = ResultCodeConfig.getResultMessage(ResultCodeConstant.UNKONW_EXCEPTION);
         }
         else
         {
@@ -39,17 +39,6 @@ public class ExceptionBase extends RuntimeException
     public ExceptionBase()
     {
         super();
-    }
-    
-    public ExceptionBase(int errorCode)
-    {
-        this.errorCode = errorCode;
-        String message = PropertiesListenerConfig.getResultMessage(errorCode);
-        if (StringUtils.isBlank(message))
-        {
-            message = PropertiesListenerConfig.getResultMessage(ResultCodeConstant.UNKONW_EXCEPTION);
-        }
-        
     }
     
     public ExceptionBase(int errorCode, String errorMessage)
